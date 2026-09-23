@@ -1,0 +1,42 @@
+export const TIMELINE_EVENTS = [
+  {
+    year: "2018",
+    title: "The Beginning",
+    subtitle: "A Garage & A Vintage Probat Roaster",
+    description: "Founded by two passionate baristas obsessed with bean origin terroir. We traveled across Ethiopia and Colombia to form direct-trade relationships with fifth-generation farming families.",
+    highlight: "First 200kg micro-lot roasted and hand-delivered.",
+    image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    year: "2020",
+    title: "First Café",
+    subtitle: "A Quiet Sanctuary on Artisan Lane",
+    description: "We transformed a 1920s brick warehouse into an intentional coffeehouse sanctuary with custom walnut counters, brass pour-over stations, and an acoustic soundscape designed for quiet connection.",
+    highlight: "Awarded Best Specialty Café Design.",
+    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    year: "2022",
+    title: "New Roastery",
+    subtitle: "Clean Energy Roasting Lab",
+    description: "Expanded our facilities to include a zero-emission electric fluid-bed roaster, a dedicated sensory cupping room, and public barista masterclasses for coffee enthusiasts.",
+    highlight: "Carbon-neutral certified roasting process.",
+    image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    year: "2024",
+    title: "Community & Specialty Craft",
+    subtitle: "Cultivating Moments Together",
+    description: "Launched our botanical drink series, acoustic evening salons, and farm-direct cold brew tap program. Over 50,000 mindful moments celebrated with our community.",
+    highlight: "Partnered with 14 organic biodynamic micro-farms.",
+    image: "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    year: "2026",
+    title: "What's Next",
+    subtitle: "Expanding Horizons & Regenerative Agriculture",
+    description: "Pioneering shaded agroforestry initiatives at origin, opening our botanical glasshouse greenhouse pavilion, and bringing the PINCOF coffee ethos to new cultural hubs.",
+    highlight: "100% regenerative agriculture pledge.",
+    image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80",
+  },
+];
