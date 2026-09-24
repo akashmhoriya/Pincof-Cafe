@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -27,6 +28,36 @@ export function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#140c08] text-[#ede5d8] bg-noise relative">
+      {/* Toast Notification Container */}
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: '#1f1610',
+            color: '#ede5d8',
+            border: '1px solid rgba(212, 163, 115, 0.25)',
+            boxShadow: '0 10px 30px -5px rgba(0, 0, 0, 0.6)',
+            fontFamily: 'sans-serif',
+            fontSize: '14px',
+            borderRadius: '12px',
+            padding: '12px 16px',
+          },
+          success: {
+            iconTheme: {
+              primary: '#10b981',
+              secondary: '#140c08',
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: '#ef4444',
+              secondary: '#140c08',
+            },
+          },
+        }}
+      />
+
       {/* Initial Loading Screen */}
       {initialLoading && (
         <LoadingScreen onComplete={() => setInitialLoading(false)} />
