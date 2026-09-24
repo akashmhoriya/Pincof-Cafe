@@ -32,7 +32,7 @@ PINCOF is a high-performance, standalone frontend portfolio web application craf
 ## 📁 Project Architecture
 
 ```
-Pincof-Coffee-Cafe/
+Pincof-Cafe/
 │
 ├── public/
 │   ├── favicon.svg                 # Custom coffee bean brand mark
@@ -114,7 +114,7 @@ Pincof-Coffee-Cafe/
 ### 1. Clone & Install
 ```bash
 # Navigate to the project directory
-cd Pincof-Coffee-Cafe
+cd Pincof-Cafe
 
 # Install dependencies
 npm install
