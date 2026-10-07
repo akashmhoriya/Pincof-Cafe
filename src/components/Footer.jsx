@@ -9,7 +9,11 @@ export const Footer = () => {
   const [newsletterSubscribed, setNewsletterSubscribed] = useState(false);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.lenis) {
+      window.lenis.scrollTo(0);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const handleNewsletterSubmit = (e) => {

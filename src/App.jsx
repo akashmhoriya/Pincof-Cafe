@@ -1,5 +1,5 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import React, { useState, Suspense, lazy } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
 import Navbar from './components/Navbar';
@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
 import LoadingScreen from './components/LoadingScreen';
 import PageTransition from './components/PageTransition';
+import { useSmoothScroll } from './hooks/useSmoothScroll';
 
 // Route code-splitting with React.lazy
 const Home = lazy(() => import('./pages/Home'));
@@ -19,12 +20,9 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 
 export function App() {
   const [initialLoading, setInitialLoading] = useState(true);
-  const location = useLocation();
 
-  // Scroll to top on route change
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
+  // Initialize site-wide Lenis smooth scrolling (active after initial loader)
+  useSmoothScroll(!initialLoading);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#140c08] text-[#ede5d8] bg-noise relative">

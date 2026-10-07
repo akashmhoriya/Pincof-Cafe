@@ -18,38 +18,141 @@ export const About = () => {
 
   const containerRef = useRef(null);
   const timelineRef = useRef(null);
+  const timelineHeadingRef = useRef(null);
+  const timelineTrackRef = useRef(null);
+  const progressLineRef = useRef(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const ctx = gsap.context(() => {
-      const nodes = timelineRef.current?.querySelectorAll('.timeline-card');
+      const cards = timelineTrackRef.current?.querySelectorAll('.timeline-card');
 
       if (prefersReducedMotion) {
-        if (nodes) {
-          gsap.set(nodes, { opacity: 1, y: 0 });
+        if (cards) {
+          gsap.set(cards, { opacity: 1, x: 0, y: 0 });
+        }
+        if (progressLineRef.current) {
+          gsap.set(progressLineRef.current, { scaleY: 1 });
         }
         return;
       }
 
-      // Animate timeline nodes on scroll
-      if (nodes && nodes.length > 0) {
-        nodes.forEach((node) => {
-          gsap.fromTo(
-            node,
-            { opacity: 0, y: 45 },
+      // 1. Heading entrance reveal
+      if (timelineHeadingRef.current) {
+        gsap.fromTo(
+          timelineHeadingRef.current,
+          { opacity: 0, y: 35 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: timelineHeadingRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+
+      // 2. Dynamic Glowing Spine (Scrubbed Golden Line that draws down as you scroll)
+      if (progressLineRef.current && timelineTrackRef.current) {
+        gsap.fromTo(
+          progressLineRef.current,
+          { scaleY: 0 },
+          {
+            scaleY: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: timelineTrackRef.current,
+              start: 'top 75%',
+              end: 'bottom 85%',
+              scrub: 0.8,
+            },
+          }
+        );
+      }
+
+      // 3. Synchronized Card & Milestone Bead activations
+      if (cards && cards.length > 0) {
+        cards.forEach((card) => {
+          const beadInner = card.querySelector('.timeline-bead-inner');
+          const beadPulse = card.querySelector('.timeline-bead-pulse');
+          const image = card.querySelector('.timeline-image');
+          const year = card.querySelector('.timeline-year');
+
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 82%',
+              toggleActions: 'play none none reverse',
+            },
+          });
+
+          // Card slides in from right with subtle elevation
+          tl.fromTo(
+            card,
+            { opacity: 0, x: 40, y: 20 },
             {
               opacity: 1,
+              x: 0,
               y: 0,
-              duration: 1,
+              duration: 0.85,
               ease: 'power3.out',
-              scrollTrigger: {
-                trigger: node,
-                start: 'top 82%',
-                toggleActions: 'play none none none',
-              },
             }
           );
+
+          // Bead blooms into glowing caramel gold
+          if (beadInner) {
+            tl.fromTo(
+              beadInner,
+              {
+                scale: 0.7,
+                backgroundColor: '#140c08',
+                borderColor: 'rgba(200, 137, 73, 0.35)',
+              },
+              {
+                scale: 1.25,
+                backgroundColor: '#d79a5b',
+                borderColor: '#faf7f2',
+                boxShadow: '0 0 20px rgba(215, 154, 91, 0.85)',
+                duration: 0.45,
+                ease: 'back.out(2)',
+              },
+              '-=0.6'
+            );
+          }
+
+          if (beadPulse) {
+            tl.fromTo(
+              beadPulse,
+              { scale: 0.8, opacity: 0 },
+              { scale: 1.8, opacity: 0.4, duration: 0.5, ease: 'power2.out' },
+              '-=0.45'
+            );
+          }
+
+          // Subtle photo zoom-out reveal
+          if (image) {
+            tl.fromTo(
+              image,
+              { scale: 1.15 },
+              { scale: 1, duration: 1.1, ease: 'power2.out' },
+              '-=0.85'
+            );
+          }
+
+          // Year label entrance
+          if (year) {
+            tl.fromTo(
+              year,
+              { opacity: 0, y: 10 },
+              { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+              '-=0.75'
+            );
+          }
         });
       }
     }, containerRef);
@@ -212,33 +315,57 @@ export const About = () => {
         ref={timelineRef}
         className="px-6 sm:px-8 lg:px-12 max-w-5xl mx-auto mb-32"
       >
-        <SectionHeading
-          badge="Milestones"
-          title="The Chapters of Our Growth."
-          subtitle="From a hand-cranked roaster in an abandoned brick annex to a cherished sanctuary for slow culture."
-          className="mb-20"
-        />
+        <div ref={timelineHeadingRef}>
+          <SectionHeading
+            badge="Milestones"
+            title="The Chapters of Our Growth."
+            subtitle="From a hand-cranked roaster in an abandoned brick annex to a cherished sanctuary for slow culture."
+            className="mb-20"
+          />
+        </div>
 
-        <div className="relative border-l border-caramel-500/30 ml-4 sm:ml-8 pl-6 sm:pl-12 space-y-16">
+        <div
+          ref={timelineTrackRef}
+          className="relative ml-4 sm:ml-8 pl-6 sm:pl-12 space-y-16"
+        >
+          {/* Static Background Rail Line */}
+          <div
+            aria-hidden="true"
+            className="absolute left-0 top-5 bottom-6 w-[2px] bg-cream-300/10 rounded-full"
+          />
+
+          {/* Dynamic Scrubbed Golden Progress Line */}
+          <div
+            ref={progressLineRef}
+            aria-hidden="true"
+            className="absolute left-0 -inset-5 bottom-6 w-[2px] bg-gradient-to-b from-caramel-400 via-caramel-500 to-caramel-300 rounded-full origin-top scale-y-0 shadow-[0_0_12px_rgba(200,137,73,0.85)] will-change-transform"
+          />
+
           {TIMELINE_EVENTS.map((event, idx) => (
             <div key={idx} className="timeline-card relative group">
               {/* Year Marker Bead */}
-              <div className="absolute -left-[31px] sm:-left-[55px] top-1.5 w-4 h-4 rounded-full bg-caramel-500 border-4 border-[#140c08] shadow-[0_0_12px_rgba(200,137,73,0.6)]" />
+              <div
+                aria-hidden="true"
+                className="absolute -left-[31px] sm:-left-[55px] top-6 flex items-center justify-center pointer-events-none"
+              >
+                <div className="timeline-bead-pulse absolute w-8 h-8 rounded-full bg-caramel-400 blur-sm opacity-0 pointer-events-none" />
+                <div className="timeline-bead-inner w-4 h-4 rounded-full bg-espresso-950 border-2 border-caramel-500/40 will-change-transform" />
+              </div>
 
-              <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start glass-card p-6 sm:p-8 rounded-2xl border border-cream-300/10 transition-colors group-hover:border-caramel-500/30">
+              <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start glass-card p-6 sm:p-8 rounded-2xl border border-cream-300/10 transition-colors group-hover:border-caramel-500/30 overflow-hidden shadow-xl">
                 <div className="lg:w-1/3 w-full h-44 rounded-xl overflow-hidden bg-espresso-900 flex-shrink-0">
                   <img
                     src={event.image}
                     alt={event.title}
                     loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="timeline-image w-full h-full object-cover will-change-transform transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
 
                 <div className="lg:w-2/3 flex flex-col justify-between">
                   <div>
                     <div className="flex items-baseline gap-3 mb-1">
-                      <span className="font-serif text-3xl sm:text-4xl text-caramel-400 font-light">
+                      <span className="timeline-year font-serif text-3xl sm:text-4xl text-caramel-400 font-light will-change-transform inline-block">
                         {event.year}
                       </span>
                       <span className="text-xs uppercase font-sans tracking-widest text-cream-300/60 font-medium">

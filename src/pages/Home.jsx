@@ -352,7 +352,21 @@ export const Home = () => {
           </div>
 
           {/* Scroll Down Indicator */}
-          <div className="mt-16 flex flex-col items-center gap-2 text-cream-400/50 hover:text-caramel-400 transition-colors animate-bounce">
+          <div
+            onClick={() => {
+              if (introSectionRef.current) {
+                if (window.lenis) {
+                  window.lenis.scrollTo(introSectionRef.current);
+                } else {
+                  introSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+                }
+              }
+            }}
+            className="mt-16 flex flex-col items-center gap-2 text-cream-400/50 hover:text-caramel-400 transition-colors animate-bounce cursor-pointer select-none"
+            role="button"
+            tabIndex={0}
+            aria-label="Scroll to introduction section"
+          >
             <span className="text-[10px] uppercase font-sans tracking-[0.25em]">
               Scroll To Experience
             </span>
