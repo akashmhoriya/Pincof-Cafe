@@ -217,7 +217,7 @@ export const About = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Main Visual */}
           <div className="lg:col-span-7">
-            <div className="relative rounded-2xl overflow-hidden border border-cream-300/10 shadow-2xl h-[420px] sm:h-[520px] cursor-view">
+            <div className="relative rounded-2xl overflow-hidden border border-cream-300/10 shadow-2xl h-[420px] sm:h-[520px]">
               <img
                 src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1200&q=85"
                 alt="Harvested ripe specialty coffee cherries"

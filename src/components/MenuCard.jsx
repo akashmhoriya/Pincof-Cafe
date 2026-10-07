@@ -28,7 +28,7 @@ export const MenuCard = ({ item, className = '' }) => {
       className={`menu-card-item group relative flex flex-col rounded-2xl overflow-hidden glass-card transition-shadow duration-500 hover:shadow-[0_25px_50px_rgba(0,0,0,0.6)] will-change-transform ${className}`}
     >
       {/* Image Container with Zoom Effect */}
-      <div className="relative w-full h-64 sm:h-72 overflow-hidden bg-espresso-900 cursor-view">
+      <div className="relative w-full h-64 sm:h-72 overflow-hidden bg-espresso-900">
         <img
           src={item.image}
           alt={item.name}

@@ -44,7 +44,7 @@ export const Gallery = () => {
       {GALLERY_IMAGES.map((item) => (
         <div
           key={item.id}
-          className={`relative rounded-2xl overflow-hidden group cursor-view ${item.aspect} bg-espresso-900 border border-cream-300/10`}
+          className={`relative rounded-2xl overflow-hidden group ${item.aspect} bg-espresso-900 border border-cream-300/10`}
         >
           {/* Background image with hover zoom */}
           <img

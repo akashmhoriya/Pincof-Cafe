@@ -385,7 +385,7 @@ export const Home = () => {
           <div className="lg:col-span-6 order-2 lg:order-1">
             <div
               ref={introImageWrapperRef}
-              className="relative w-full h-[450px] sm:h-[550px] rounded-2xl overflow-hidden shadow-2xl border border-cream-300/10 cursor-view"
+              className="relative w-full h-[450px] sm:h-[550px] rounded-2xl overflow-hidden shadow-2xl border border-cream-300/10"
             >
               <img
                 ref={introImageRef}

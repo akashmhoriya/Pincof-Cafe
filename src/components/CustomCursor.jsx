@@ -5,9 +5,7 @@ export const CustomCursor = () => {
   const cursorRef = useRef(null);
   const followerRef = useRef(null);
   const [isTouch, setIsTouch] = useState(false);
-  const [cursorText, setCursorText] = useState('');
   const [isHovered, setIsHovered] = useState(false);
-  const [isImageHover, setIsImageHover] = useState(false);
   const [isMouseDown, setIsMouseDown] = useState(false);
 
   useEffect(() => {
@@ -63,20 +61,7 @@ export const CustomCursor = () => {
       if (!target || !(target instanceof Element)) return;
 
       const clickable = target.closest('a, button, [role="button"], input, textarea, select, .cursor-pointer');
-      const imageElement = target.closest('img, .cursor-view');
-
-      if (imageElement && !clickable) {
-        setIsImageHover(true);
-        setCursorText('VIEW');
-      } else if (clickable) {
-        setIsHovered(true);
-        setIsImageHover(false);
-        setCursorText('');
-      } else {
-        setIsHovered(false);
-        setIsImageHover(false);
-        setCursorText('');
-      }
+      setIsHovered(Boolean(clickable));
     };
 
     const handleMouseDown = () => setIsMouseDown(true);
@@ -122,26 +107,22 @@ export const CustomCursor = () => {
         ref={cursorRef}
         aria-hidden="true"
         className={`fixed top-0 left-0 w-2 h-2 bg-caramel-400 rounded-full pointer-events-none z-[9999] will-change-transform transition-opacity duration-200 ${
-          isHovered ? 'opacity-50' : 'opacity-100'
+          isHovered ? 'opacity-40' : 'opacity-100'
         }`}
       />
 
-      {/* Crisp fluid tracking follower ring - completely sharp with zero backdrop-blur */}
+      {/* Crisp fluid tracking follower ring */}
       <div
         ref={followerRef}
         aria-hidden="true"
-        className={`fixed top-0 left-0 pointer-events-none z-[9998] rounded-full flex items-center justify-center will-change-transform transition-[width,height,background-color,border-color,opacity] duration-200 ease-out ${
+        className={`fixed top-0 left-0 pointer-events-none z-[9998] rounded-full will-change-transform transition-[width,height,background-color,border-color,opacity] duration-200 ease-out ${
           isMouseDown ? 'scale-90' : 'scale-100'
         } ${
-          isImageHover
-            ? 'w-20 h-20 bg-caramel-500 text-espresso-950 font-sans text-[11px] font-bold tracking-widest border border-caramel-300'
-            : isHovered
+          isHovered
             ? 'w-12 h-12 border-2 border-caramel-400 bg-caramel-400/10'
             : 'w-8 h-8 border border-cream-300/40 bg-transparent'
         }`}
-      >
-        {isImageHover && <span>{cursorText}</span>}
-      </div>
+      />
     </>
   );
 };
